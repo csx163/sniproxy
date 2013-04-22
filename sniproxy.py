@@ -165,7 +165,7 @@ class DNSUtil(object):
         return iplist
 
 
-class DNSServer(gevent.server.DatagramServer):
+class DNSServer(gevent.server.StreamServer):
     """DNS Proxy over TCP to avoid DNS poisoning"""
     dnsservers = ['8.8.8.8', '8.8.4.4']
     max_wait = 1
@@ -174,7 +174,7 @@ class DNSServer(gevent.server.DatagramServer):
     timeout = 6
 
     def __init__(self, *args, **kwargs):
-        gevent.server.DatagramServer.__init__(self, *args, **kwargs)
+        gevent.server.StreamServer.__init__(self, *args, **kwargs)
         self.cache = {}
 
     def add_record(self, qname, ip):
